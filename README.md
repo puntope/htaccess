@@ -331,6 +331,16 @@ SetEnvIf Request_URI "/starry-night" allow_framing=true
 Header set X-Frame-Options SAMEORIGIN env=!allow_framing
 ```
 
+### Prevent indexation of certain files
+This prevents the files matching a regex to be indexed.
+``` apacheconf
+<IfModule mod_headers.c>
+ <FilesMatch "directory-or-url(.*)\.(pdf)$">
+    Header set X-Robots-Tag "noindex, nofollow"
+ </FilesMatch>
+</IfModule>
+```
+
 ## Performance
 ### Compress Text Files
 ``` apacheconf
@@ -528,3 +538,5 @@ RewriteCond %{DOCUMENT_ROOT}/$1.webp -f
 RewriteRule (.+)\.(jpe?g|png)$ $1.webp [T=image/webp,E=accept:1]
 ```
 [Source](https://github.com/vincentorback/WebP-images-with-htaccess)
+
+
